@@ -1,0 +1,525 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Neon Stack V3 — Règles</title>
+  <style>
+    :root {
+      --bg: #0b1020;
+      --bg2: #121933;
+      --card: rgba(17, 24, 39, 0.88);
+      --line: rgba(120, 147, 255, 0.25);
+      --text: #eef2ff;
+      --muted: #c6d0ff;
+      --cyan: #5eead4;
+      --violet: #a78bfa;
+      --amber: #fbbf24;
+      --rose: #fb7185;
+      --shadow: 0 14px 36px rgba(0, 0, 0, 0.35);
+      --radius: 18px;
+      --maxw: 1050px;
+    }
+
+    * { box-sizing: border-box; }
+    html { scroll-behavior: smooth; }
+    body {
+      margin: 0;
+      font-family: Inter, system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Arial, sans-serif;
+      color: var(--text);
+      background:
+        radial-gradient(circle at top left, rgba(94, 234, 212, 0.10), transparent 28%),
+        radial-gradient(circle at top right, rgba(167, 139, 250, 0.12), transparent 32%),
+        linear-gradient(180deg, #090d1a 0%, #0b1020 48%, #0a0f1f 100%);
+      line-height: 1.65;
+    }
+
+    a { color: var(--cyan); text-decoration: none; }
+    a:hover { text-decoration: underline; }
+
+    .wrap {
+      max-width: var(--maxw);
+      margin: 0 auto;
+      padding: 24px;
+    }
+
+    .hero {
+      margin-top: 16px;
+      padding: 34px 28px;
+      background: linear-gradient(145deg, rgba(17, 24, 39, 0.92), rgba(22, 30, 54, 0.90));
+      border: 1px solid var(--line);
+      border-radius: 28px;
+      box-shadow: var(--shadow);
+      position: relative;
+      overflow: hidden;
+    }
+
+    .hero::after {
+      content: "";
+      position: absolute;
+      inset: auto -10% -35% auto;
+      width: 360px;
+      height: 360px;
+      background: radial-gradient(circle, rgba(167, 139, 250, 0.24), transparent 62%);
+      pointer-events: none;
+    }
+
+    .eyebrow {
+      display: inline-block;
+      padding: 6px 12px;
+      font-size: 0.8rem;
+      letter-spacing: 0.08em;
+      text-transform: uppercase;
+      border-radius: 999px;
+      color: var(--cyan);
+      background: rgba(94, 234, 212, 0.10);
+      border: 1px solid rgba(94, 234, 212, 0.18);
+      margin-bottom: 14px;
+    }
+
+    h1 {
+      margin: 0 0 8px;
+      font-size: clamp(2rem, 4vw, 3.2rem);
+      line-height: 1.1;
+      letter-spacing: -0.03em;
+    }
+
+    .subtitle {
+      max-width: 780px;
+      margin: 0;
+      color: var(--muted);
+      font-size: 1.05rem;
+    }
+
+    .cta {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 12px;
+      margin-top: 22px;
+    }
+
+    .btn {
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      padding: 12px 16px;
+      border-radius: 12px;
+      border: 1px solid var(--line);
+      background: rgba(255,255,255,0.04);
+      color: var(--text);
+      font-weight: 600;
+      text-decoration: none;
+    }
+
+    .btn.primary {
+      background: linear-gradient(135deg, rgba(94, 234, 212, 0.16), rgba(167, 139, 250, 0.16));
+    }
+
+    .layout {
+      display: grid;
+      grid-template-columns: 280px minmax(0, 1fr);
+      gap: 24px;
+      margin-top: 24px;
+    }
+
+    aside {
+      position: sticky;
+      top: 20px;
+      align-self: start;
+      padding: 18px;
+      background: rgba(18, 25, 51, 0.8);
+      border: 1px solid var(--line);
+      border-radius: var(--radius);
+      box-shadow: var(--shadow);
+    }
+
+    aside h2 {
+      margin: 0 0 12px;
+      font-size: 1rem;
+      color: var(--cyan);
+    }
+
+    .toc {
+      list-style: none;
+      margin: 0;
+      padding: 0;
+    }
+
+    .toc li + li { margin-top: 7px; }
+    .toc a {
+      display: block;
+      padding: 6px 8px;
+      border-radius: 10px;
+      color: var(--muted);
+    }
+    .toc a:hover {
+      background: rgba(255,255,255,0.05);
+      color: var(--text);
+      text-decoration: none;
+    }
+
+    main {
+      display: grid;
+      gap: 18px;
+    }
+
+    section {
+      padding: 24px;
+      background: rgba(18, 25, 51, 0.78);
+      border: 1px solid var(--line);
+      border-radius: var(--radius);
+      box-shadow: var(--shadow);
+    }
+
+    section h2 {
+      margin-top: 0;
+      margin-bottom: 12px;
+      font-size: 1.35rem;
+      color: var(--text);
+    }
+
+    p, li { color: var(--muted); }
+
+    .grid2 {
+      display: grid;
+      grid-template-columns: repeat(2, minmax(0, 1fr));
+      gap: 14px;
+      margin-top: 12px;
+    }
+
+    .mini {
+      padding: 16px;
+      border-radius: 14px;
+      background: rgba(255,255,255,0.03);
+      border: 1px solid rgba(255,255,255,0.06);
+    }
+
+    .mini h3 {
+      margin: 0 0 8px;
+      font-size: 1rem;
+      color: var(--cyan);
+    }
+
+    .callout {
+      margin-top: 14px;
+      padding: 16px 18px;
+      border-radius: 14px;
+      background: rgba(251, 191, 36, 0.08);
+      border: 1px solid rgba(251, 191, 36, 0.20);
+    }
+
+    .callout strong { color: #ffe3a3; }
+
+    .danger {
+      background: rgba(251, 113, 133, 0.08);
+      border-color: rgba(251, 113, 133, 0.22);
+    }
+
+    .steps, .simple-list {
+      padding-left: 1.2rem;
+      margin: 0;
+    }
+
+    table {
+      width: 100%;
+      border-collapse: collapse;
+      margin-top: 12px;
+      overflow: hidden;
+      border-radius: 14px;
+      background: rgba(255,255,255,0.02);
+    }
+
+    th, td {
+      padding: 12px 14px;
+      text-align: left;
+      vertical-align: top;
+      border-bottom: 1px solid rgba(255,255,255,0.06);
+    }
+
+    th {
+      color: var(--text);
+      background: rgba(255,255,255,0.04);
+      font-weight: 700;
+    }
+
+    code {
+      display: inline-block;
+      padding: 2px 6px;
+      border-radius: 8px;
+      background: rgba(255,255,255,0.06);
+      color: #e9d5ff;
+      font-family: ui-monospace, SFMono-Regular, Menlo, Consolas, monospace;
+      font-size: 0.95em;
+    }
+
+    .footer {
+      text-align: center;
+      color: #a9b3df;
+      margin: 30px 0 10px;
+      font-size: 0.95rem;
+    }
+
+    @media (max-width: 920px) {
+      .layout {
+        grid-template-columns: 1fr;
+      }
+      aside {
+        position: static;
+      }
+      .grid2 {
+        grid-template-columns: 1fr;
+      }
+    }
+  </style>
+</head>
+<body>
+  <div class="wrap">
+    <header class="hero">
+      <div class="eyebrow">Neon Stack V3</div>
+      <h1>Règles du jeu</h1>
+      <p class="subtitle">Jeu de cartes pédagogique sur la récursivité, la pile d’appel, les branches non bornées et les débordements de pile. Cette page est pensée pour être lue vite avant une partie, sans faire pleurer la syntaxe.</p>
+      <div class="cta">
+        <a class="btn primary" href="https://tcg-arena.fr/load/aHR0cHMlM0ElMkYlMkZhcmNoaWJvZ3VlLmdpdGh1Yi5pbyUyRk5lb25TdGFjayUyRkdhbWVfTmVvbiUyNTIwU3RhY2suanNvbg==">▶ Jouer dans TCG Arena</a>
+        <a class="btn" href="https://archibogue.github.io/NeonStack/">⬅ Retour au projet</a>
+      </div>
+    </header>
+
+    <div class="layout">
+      <aside>
+        <h2>Sommaire</h2>
+        <ul class="toc">
+          <li><a href="#but">1. But du jeu</a></li>
+          <li><a href="#types">2. Types de cartes</a></li>
+          <li><a href="#zones">3. Zones et limites</a></li>
+          <li><a href="#energie">4. Énergie</a></li>
+          <li><a href="#tour">5. Déroulement d’un tour</a></li>
+          <li><a href="#combat">6. Programmes et combat</a></li>
+          <li><a href="#pile">7. Pile d’appel</a></li>
+          <li><a href="#recompiler">8. Recompiler</a></li>
+          <li><a href="#resolution">9. Résolution d’une branche</a></li>
+          <li><a href="#interrupts">10. Interrupts</a></li>
+          <li><a href="#non-bornee">11. Branche non bornée</a></li>
+          <li><a href="#overflow">12. Overflow</a></li>
+          <li><a href="#source">13. Si le Programme source quitte le jeu</a></li>
+          <li><a href="#exemples">14. Exemples utiles</a></li>
+          <li><a href="#tcg">15. Repères TCG Arena</a></li>
+        </ul>
+      </aside>
+
+      <main>
+        <section id="but">
+          <h2>1. But du jeu</h2>
+          <p>Faire tomber le <strong>Noyau</strong> adverse à <strong>0</strong>, ou gagner si l’adversaire doit piocher alors que son deck est vide.</p>
+          <div class="grid2">
+            <div class="mini">
+              <h3>Mise en place</h3>
+              <ul class="simple-list">
+                <li>20 points de Noyau au départ</li>
+                <li>5 cartes en main</li>
+                <li>0 Énergie maximum et 0 Énergie disponible au début de la partie</li>
+              </ul>
+            </div>
+            <div class="mini">
+              <h3>Idée générale</h3>
+              <p>Tu poses des Programmes, tu attaques, et tu crées des branches récursives dans la pile d’appel. Plus une branche descend, plus elle promet… et plus elle risque de te sauter à la figure.</p>
+            </div>
+          </div>
+        </section>
+
+        <section id="types">
+          <h2>2. Types de cartes</h2>
+          <table>
+            <thead>
+              <tr><th>Type</th><th>Rôle</th></tr>
+            </thead>
+            <tbody>
+              <tr><td>Programme</td><td>Unité posée sur la table. Elle possède une <strong>Puissance</strong> et une <strong>Intégrité</strong>.</td></tr>
+              <tr><td>Commande</td><td>Effet joué pendant ton propre tour.</td></tr>
+              <tr><td>Interrupt</td><td>Effet joué en réponse à une action, pendant n’importe quel tour.</td></tr>
+              <tr><td>Équipement</td><td>Carte attachée à un Programme allié.</td></tr>
+              <tr><td>Artefact</td><td>Effet permanent posé sur la table.</td></tr>
+            </tbody>
+          </table>
+        </section>
+
+        <section id="zones">
+          <h2>3. Zones et limites de jeu</h2>
+          <ul class="simple-list">
+            <li>Deck</li>
+            <li>Main</li>
+            <li>Zone de Programmes</li>
+            <li>Zone d’Artefact</li>
+            <li>Défausse</li>
+            <li>Pile d’appel</li>
+          </ul>
+          <div class="callout">
+            <strong>Limites de table :</strong> maximum <strong>4 Programmes</strong> en jeu et <strong>1 Artefact</strong> actif. Si tu poses un nouvel Artefact, l’ancien est détruit.
+          </div>
+        </section>
+
+        <section id="energie">
+          <h2>4. Énergie</h2>
+          <p>L’Énergie sert à payer le coût des cartes. Elle se gère avec deux notions :</p>
+          <ul class="simple-list">
+            <li><strong>Énergie maximum</strong> : la valeur atteinte au début de ton tour.</li>
+            <li><strong>Énergie disponible</strong> : la réserve immédiatement utilisable pour jouer tes cartes et tes Interrupts.</li>
+          </ul>
+          <p>Au début de chacun de ses tours, un joueur augmente son Énergie maximum de 1 puis fixe son Énergie disponible à ce maximum.</p>
+          <div class="callout">
+            <strong>Très important :</strong> l’Énergie non dépensée <strong>n’est pas perdue</strong> à la fin du tour. Elle reste disponible pendant le tour adverse, ce qui permet de jouer des Interrupts.
+          </div>
+          <p>Si un effet te fait gagner de l’Énergie, cette réserve peut dépasser temporairement ton maximum jusqu’au début de ton prochain tour.</p>
+        </section>
+
+        <section id="tour">
+          <h2>5. Déroulement d’un tour</h2>
+          <ol class="steps">
+            <li><strong>Initialisation</strong> : redresser tous ses Programmes engagés, augmenter son Énergie maximum de 1, fixer son Énergie disponible à ce maximum, puis piocher 1 carte.</li>
+            <li><strong>Déploiement</strong> : jouer des Programmes, des Commandes, des Équipements et des Artefacts tant qu’on peut les payer.</li>
+            <li><strong>Combat</strong> : attaquer avec ses Programmes prêts.</li>
+            <li><strong>Exécution</strong> : résoudre sa pile d’appel.</li>
+            <li><strong>Fin de tour</strong> : les effets temporaires cessent et tous les Programmes survivants récupèrent toute leur Intégrité.</li>
+          </ol>
+        </section>
+
+        <section id="combat">
+          <h2>6. Programmes et combat</h2>
+          <ul class="simple-list">
+            <li>Un Programme qui vient d’entrer en jeu ne peut pas attaquer ce tour-ci, mais peut bloquer normalement.</li>
+            <li>Quand un Programme attaque, il devient engagé.</li>
+            <li>Une attaque peut viser soit un Programme adverse, soit le Noyau adverse.</li>
+            <li>Si l’attaque vise le Noyau, le défenseur peut déclarer un seul Programme non engagé comme bloqueur.</li>
+            <li>Quand deux Programmes s’affrontent, chacun inflige à l’autre un nombre de dégâts égal à sa Puissance.</li>
+            <li>Un Programme détruit est placé dans la défausse.</li>
+          </ul>
+          <div class="callout">
+            Les dégâts sur les Programmes <strong>ne sont pas permanents</strong> : à la fin du tour, tous les survivants reviennent à leur Intégrité maximale.
+          </div>
+        </section>
+
+        <section id="pile">
+          <h2>7. La pile d’appel</h2>
+          <p>La pile d’appel est la zone où vivent les branches récursives. C’est le cœur du jeu.</p>
+          <p>Une carte récursive crée une <strong>branche</strong> composée de <strong>cadres numérotés</strong>. Plus cette branche descend profondément, plus la carte sera puissante au total.</p>
+        </section>
+
+        <section id="recompiler">
+          <h2>8. Recompiler</h2>
+          <div class="grid2">
+            <div class="mini">
+              <h3>Recompiler X</h3>
+              <p>La profondeur est imposée.</p>
+              <p><code>Recompiler 3</code> crée les cadres <code>[3][2][1][0]</code>.</p>
+            </div>
+            <div class="mini">
+              <h3>Recompiler jusqu’à X</h3>
+              <p>La profondeur est choisie par le joueur au moment où il joue la carte.</p>
+              <p><code>Recompiler jusqu’à 4</code> permet de choisir <code>0</code>, <code>1</code>, <code>2</code>, <code>3</code> ou <code>4</code>.</p>
+            </div>
+          </div>
+          <div class="callout">
+            Plus la profondeur est grande, plus l’effet promet d’être fort. Et plus tu invites l’Overflow à venir danser sur la table.
+          </div>
+        </section>
+
+        <section id="resolution">
+          <h2>9. Résolution d’une branche</h2>
+          <p>Pendant la phase d’Exécution, si ta pile d’appel n’est pas vide, tu résous <strong>jusqu’à 3 cadres</strong>, toujours en commençant par celui du sommet.</p>
+          <ul class="simple-list">
+            <li><strong>Cadre 0</strong> : applique le <strong>Cas de base</strong> de la carte.</li>
+            <li><strong>Cadre supérieur à 0</strong> : applique la <strong>Remontée</strong> de la carte.</li>
+          </ul>
+          <p>Une branche normale possède donc un seul Cas de base et autant de Remontées qu’il reste de cadres au-dessus de 0.</p>
+        </section>
+
+        <section id="interrupts">
+          <h2>10. Interrupts</h2>
+          <p>Un Interrupt peut être joué en réaction à une action, tant que son coût peut être payé.</p>
+          <ul class="simple-list">
+            <li>création d’une branche</li>
+            <li>attaque</li>
+            <li>Cas de base</li>
+            <li>Remontée</li>
+            <li>Overflow</li>
+            <li>autre Interrupt, si son texte le permet</li>
+          </ul>
+          <div class="callout">
+            Les Interrupts se résolvent <strong>avant</strong> l’effet auquel ils répondent.
+          </div>
+        </section>
+
+        <section id="non-bornee">
+          <h2>11. Branche non bornée</h2>
+          <p>Si une branche est privée de son cadre <code>0</code>, ou si le Cas de base du cadre <code>0</code> est annulé avant sa résolution, la branche devient <strong>non bornée</strong>.</p>
+          <ul class="simple-list">
+            <li>Place un marqueur <strong>∞</strong> sur cette branche.</li>
+            <li>Une branche non bornée ne peut plus résoudre de Remontée.</li>
+            <li>Au début de chaque phase d’Exécution de son contrôleur, elle ajoute 1 cadre <strong>∞</strong> au sommet.</li>
+            <li>Les cadres ∞ comptent pour la taille de la pile et ne se résolvent pas.</li>
+          </ul>
+
+          <div class="callout">
+            <strong>Patch d’urgence :</strong> pendant ta phase de Déploiement, une fois par tour, tu peux payer <strong>2 Énergie</strong> pour réparer une de tes branches non bornées. Retire son marqueur ∞, retire tous ses cadres ∞, puis ajoute un cadre <code>0</code> au sommet de cette branche.
+          </div>
+        </section>
+
+        <section id="overflow">
+          <h2>12. Overflow</h2>
+          <p>Si un joueur doit ajouter un <strong>7e cadre</strong> à sa pile d’appel, il y a immédiatement <strong>Overflow</strong>.</p>
+          <ul class="simple-list">
+            <li>La branche responsable est retirée de la pile.</li>
+            <li>Si sa source est un Programme, ce Programme est détruit.</li>
+            <li>Son contrôleur perd <strong>1 point de Noyau</strong>.</li>
+          </ul>
+          <p>Si la source n’est pas un Programme en jeu, seule la branche est retirée et son contrôleur perd 1 point de Noyau.</p>
+          <div class="callout danger">
+            <strong>Repère visuel :</strong> dans TCG Arena, les cadres bugués, fantômes et infinis comptent aussi pour la taille totale de la pile. Le 7e cadre est le mur. Et le mur ne négocie pas.
+          </div>
+        </section>
+
+        <section id="source">
+          <h2>13. Si le Programme source quitte le jeu</h2>
+          <p>Si un Programme source quitte le jeu pour n’importe quelle raison, toutes les branches qu’il a créées sont immédiatement retirées de la pile d’appel.</p>
+        </section>
+
+        <section id="exemples">
+          <h2>14. Exemples utiles</h2>
+          <div class="grid2">
+            <div class="mini">
+              <h3>Cycle de Combat Fractal</h3>
+              <p>Quand ce Programme attaque, il gagne <code>Recompiler 2</code>. Il crée donc une branche <code>[2][1][0]</code>. Le cadre <code>0</code> inflige 1 dégât au Noyau adverse, puis les cadres <code>1</code> et <code>2</code> lui donnent chacun +1 Puissance selon sa Remontée.</p>
+            </div>
+            <div class="mini">
+              <h3>Appel Fantôme</h3>
+              <p>Quand un adversaire résout un Cas de base, <strong>Appel Fantôme</strong> ajoute un cadre fantôme <code>0</code> à sa pile. Ce cadre n’a qu’un Cas de base : son contrôleur perd 1 point de Noyau.</p>
+            </div>
+            <div class="mini">
+              <h3>Défragmentation</h3>
+              <p><strong>Défragmentation</strong> peut annuler une Remontée adverse. Le cadre concerné est retiré sans effet, mais la branche continue avec ses autres cadres.</p>
+            </div>
+            <div class="mini">
+              <h3>Stack Spike & Débordement Forcé</h3>
+              <p>Ces cartes ajoutent des cadres sans effet qui comptent pour la taille de la pile. Elles servent à pousser l’adversaire vers l’Overflow. Une idée délicate, raffinée, et tout à fait brutale.</p>
+            </div>
+          </div>
+        </section>
+
+        <section id="tcg">
+          <h2>15. Repères TCG Arena</h2>
+          <ul class="simple-list">
+            <li>Choisir l’un des deux decks : <strong>Neon Stack – Cyan V3</strong> ou <strong>Neon Stack – Orange V3</strong>.</li>
+            <li>Mettre dans le <strong>sideboard</strong> les marqueurs suivants : <code>Cadre 0</code> à <code>Cadre 6</code>, <code>Cadre bugué</code>, <code>Cadre fantôme 0</code>, <code>Cadre infini</code>.</li>
+            <li>Utiliser ces cartes comme repères visuels pour représenter l’état de la pile d’appel.</li>
+            <li>Les effets complexes se résolvent <strong>manuellement</strong> selon les règles ci-dessus.</li>
+          </ul>
+          <div class="callout">
+            TCG Arena sert ici de table de jeu élégante, pas de juge omniscient. La logique du jeu reste dans les règles et dans vos cerveaux, même quand ils sentent un peu la pile saturée.
+          </div>
+        </section>
+      </main>
+    </div>
+
+    <p class="footer">Neon Stack V3 — page de règles web pour GitHub Pages</p>
+  </div>
+</body>
+</html>
