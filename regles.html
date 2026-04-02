@@ -3,434 +3,249 @@
 <head>
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
-  <title>Neon Stack — Règles V4.1</title>
+  <title>NEON STACK — Règles V5 alpha</title>
   <style>
-    :root{
-      --bg:#0b1020;
-      --bg2:#121a33;
-      --panel:#151f3d;
-      --line:#2b3a6b;
-      --text:#e8eefc;
-      --muted:#b8c5ea;
-      --cyan:#43d9ff;
-      --orange:#ff9f43;
-      --accent:#8b5cf6;
-      --ok:#22c55e;
+    :root {
+      --bg: #0f1117;
+      --panel: #171b24;
+      --panel-2: #1d2330;
+      --text: #ece8df;
+      --muted: #bdb5a7;
+      --accent: #d6a362;
+      --border: rgba(214,163,98,.45);
+      --good: #7fd18b;
+      --warn: #f2b245;
     }
-    *{box-sizing:border-box}
-    body{
-      margin:0;
-      font-family:Inter,Segoe UI,Roboto,Helvetica,Arial,sans-serif;
-      background:linear-gradient(180deg,var(--bg),#08101d 40%, #0d1427);
-      color:var(--text);
-      line-height:1.6;
+    * { box-sizing: border-box; }
+    body {
+      margin: 0;
+      font-family: system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+      line-height: 1.6;
+      color: var(--text);
+      background:
+        radial-gradient(circle at top, rgba(214,163,98,.08), transparent 30%),
+        linear-gradient(180deg, #11151d 0%, #0b0e14 100%);
     }
-    .wrap{
-      max-width:1200px;
-      margin:0 auto;
-      padding:24px;
-      display:grid;
-      grid-template-columns:280px 1fr;
-      gap:24px;
+    main {
+      max-width: 980px;
+      margin: 0 auto;
+      padding: 2rem 1rem 4rem;
     }
-    .side{
-      position:sticky;
-      top:16px;
-      align-self:start;
-      background:rgba(18,26,51,.82);
-      border:1px solid var(--line);
-      border-radius:18px;
-      padding:18px;
-      backdrop-filter: blur(10px);
+    header, section {
+      background: linear-gradient(180deg, rgba(255,255,255,.03), rgba(255,255,255,.015));
+      border: 1px solid var(--border);
+      border-radius: 18px;
+      padding: 1.25rem 1.4rem;
+      margin-bottom: 1rem;
+      box-shadow: 0 10px 28px rgba(0,0,0,.18);
     }
-    .brand{
-      margin:0 0 10px;
-      font-size:1.8rem;
-      line-height:1.1;
+    h1, h2, h3 { margin-top: 0; }
+    h1 { font-size: 2rem; }
+    h2 { font-size: 1.2rem; color: var(--accent); }
+    p, li { color: var(--text); }
+    .muted { color: var(--muted); }
+    .grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
+      gap: 0.8rem;
     }
-    .badge{
-      display:inline-block;
-      padding:6px 10px;
-      border-radius:999px;
-      background:rgba(67,217,255,.12);
-      border:1px solid rgba(67,217,255,.35);
-      color:var(--cyan);
-      font-weight:700;
-      font-size:.9rem;
-      margin-bottom:10px;
+    .card {
+      background: var(--panel);
+      border: 1px solid rgba(214,163,98,.25);
+      border-radius: 14px;
+      padding: 0.9rem 1rem;
     }
-    .side p{color:var(--muted); margin:.5rem 0 1rem}
-    .side a{
-      display:block;
-      color:var(--text);
-      text-decoration:none;
-      padding:8px 10px;
-      border-radius:10px;
-      margin:4px 0;
+    .callout {
+      border-left: 4px solid var(--accent);
+      background: var(--panel-2);
+      padding: 0.85rem 1rem;
+      border-radius: 12px;
     }
-    .side a:hover{background:rgba(255,255,255,.06)}
-    .cta{
-      margin-top:14px;
-      display:grid;
-      gap:10px;
+    .good { color: var(--good); }
+    .warn { color: var(--warn); }
+    code, .mono {
+      font-family: ui-monospace, SFMono-Regular, Menlo, Consolas, monospace;
     }
-    .button{
-      display:block;
-      text-align:center;
-      text-decoration:none;
-      padding:12px 14px;
-      border-radius:12px;
-      font-weight:700;
-      color:white;
-      background:linear-gradient(90deg, var(--accent), #4f46e5);
+    table {
+      width: 100%;
+      border-collapse: collapse;
+      margin-top: 0.6rem;
+      overflow: hidden;
+      border-radius: 12px;
     }
-    .button.alt{
-      background:linear-gradient(90deg, #0f766e, #0ea5a4);
+    th, td {
+      border: 1px solid rgba(214,163,98,.22);
+      padding: 0.55rem 0.7rem;
+      text-align: left;
+      vertical-align: top;
     }
-    main{
-      min-width:0;
+    th {
+      background: rgba(214,163,98,.12);
     }
-    .hero,.panel{
-      background:rgba(18,26,51,.82);
-      border:1px solid var(--line);
-      border-radius:20px;
-      padding:24px;
-      backdrop-filter: blur(10px);
-      box-shadow:0 10px 30px rgba(0,0,0,.22);
-    }
-    .hero h1{
-      margin:0 0 8px;
-      font-size:2.4rem;
-      line-height:1.1;
-    }
-    .hero .sub{
-      color:var(--muted);
-      font-size:1.1rem;
-      margin:0;
-    }
-    .grid{
-      display:grid;
-      grid-template-columns:repeat(2,minmax(0,1fr));
-      gap:16px;
-      margin-top:16px;
-    }
-    .card{
-      background:rgba(255,255,255,.03);
-      border:1px solid rgba(255,255,255,.07);
-      border-radius:16px;
-      padding:16px;
-    }
-    .card h3{margin:0 0 8px}
-    h2{
-      margin:0 0 12px;
-      font-size:1.55rem;
-    }
-    h3{
-      margin:20px 0 8px;
-      color:white;
-    }
-    p, li{color:var(--text)}
-    .muted{color:var(--muted)}
-    .panel{margin-top:20px}
-    ul{margin-top:8px}
-    .callout{
-      border-left:4px solid var(--cyan);
-      background:rgba(67,217,255,.08);
-      padding:14px 16px;
-      border-radius:12px;
-      margin:16px 0;
-    }
-    .warn{
-      border-left-color:var(--orange);
-      background:rgba(255,159,67,.08);
-    }
-    .ok{
-      border-left-color:var(--ok);
-      background:rgba(34,197,94,.08);
-    }
-    table{
-      width:100%;
-      border-collapse:collapse;
-      margin-top:10px;
-      font-size:.98rem;
-    }
-    th,td{
-      border:1px solid var(--line);
-      padding:10px 12px;
-      text-align:left;
-      vertical-align:top;
-    }
-    th{
-      background:rgba(255,255,255,.04);
-    }
-    code{
-      background:rgba(255,255,255,.07);
-      padding:2px 6px;
-      border-radius:8px;
-      font-family:ui-monospace,SFMono-Regular,Menlo,Consolas,monospace;
-    }
-    .footer{
-      text-align:center;
-      color:var(--muted);
-      padding:26px 10px 10px;
-      font-size:.95rem;
-    }
-    @media (max-width: 920px){
-      .wrap{grid-template-columns:1fr}
-      .side{position:static}
-      .grid{grid-template-columns:1fr}
-      .hero h1{font-size:2rem}
-    }
+    ol { padding-left: 1.25rem; }
+    ul { padding-left: 1.15rem; }
+    .small { font-size: 0.95rem; }
   </style>
 </head>
 <body>
-  <div class="wrap">
-    <aside class="side">
-      <div class="badge">Version V4.1</div>
-      <h1 class="brand">Neon Stack</h1>
-      <p>Règles harmonisées du jeu pédagogique sur la récursivité, la pile d’appel et les débordements de pile.</p>
-
-      <nav>
-        <a href="#format">Format</a>
-        <a href="#mise-en-place">1. Mise en place</a>
-        <a href="#types">2. Types de cartes</a>
-        <a href="#zones">3. Zones et limites</a>
-        <a href="#energie">4. Énergie</a>
-        <a href="#tour">5. Déroulement d’un tour</a>
-        <a href="#combat">6. Programmes et combat</a>
-        <a href="#pile">7. Pile d’appel</a>
-        <a href="#recompiler">8. Recompiler</a>
-        <a href="#resolution">9. Résolution d’une branche</a>
-        <a href="#interrupts">10. Interrupts</a>
-        <a href="#non-bornee">11. Branche non bornée</a>
-        <a href="#overflow">12. Overflow</a>
-        <a href="#clarifications">13. Clarifications V4.1</a>
-        <a href="#aide">14. Aide de jeu</a>
-      </nav>
-
-      <div class="cta">
-        <a class="button alt" href="https://tcg-arena.fr/load/aHR0cHMlM0ElMkYlMkZhcmNoaWJvZ3VlLmdpdGh1Yi5pbyUyRk5lb25TdGFjayUyRkdhbWVfTmVvbiUyNTIwU3RhY2suanNvbg==">Jouer dans TCG Arena</a>
-        <a class="button" href="https://archibogue.github.io/NeonStack/">Retour au projet</a>
+  <main>
+    <header>
+      <h1>NEON STACK — Règles V5 alpha</h1>
+      <p class="muted">Version alpha centrée sur la pile d'appels, la mémoire, les fonctions cassées et un bonus de récursion fondé sur la suite de Fibonacci classique.</p>
+      <div class="grid">
+        <div class="card"><strong>Victoire</strong><br>21 points, avec au moins 4 fonctions terminées et 3 noms différents.</div>
+        <div class="card"><strong>Mémoire de départ</strong><br>20 mémoire totale / 20 mémoire libre.</div>
+        <div class="card"><strong>Overflow</strong><br>Au 8e cadre ajouté à une pile.</div>
       </div>
-    </aside>
+    </header>
 
-    <main>
-      <section class="hero">
-        <div class="badge">Neon Stack — règles harmonisées</div>
-        <h1>Règles V4.1</h1>
-        <p class="sub">Version pédagogique consolidée avec clarifications officielles et alignement sur les cartes V4.1.</p>
+    <section>
+      <h2>1. Idée générale</h2>
+      <p>Chaque joueur conçoit un programme en terminant plusieurs <strong>fonctions</strong>. Le jeu ne repose plus sur un combat de programmes, mais sur la gestion de la <strong>mémoire</strong>, de la <strong>pile d'appels</strong>, des fonctions cassées et des effets de récursion.</p>
+    </section>
 
-        <div class="grid">
-          <div class="card">
-            <h3>But du jeu</h3>
-            <p>Faire tomber le <strong>Noyau adverse à 0</strong>, ou gagner si l’adversaire doit piocher alors que son deck est vide.</p>
-          </div>
-          <div class="card">
-            <h3>Esprit pédagogique</h3>
-            <p>Une fonction récursive devient plus puissante quand elle descend plus profondément. Sans cas de base, elle ne remonte plus, empile des appels, puis menace l’overflow.</p>
-          </div>
-        </div>
-      </section>
+    <section>
+      <h2>2. Condition de victoire</h2>
+      <p>Un joueur gagne immédiatement s'il atteint <strong>21 points</strong>, à condition d'avoir terminé :</p>
+      <ul>
+        <li>au moins <strong>4 fonctions</strong> ;</li>
+        <li>avec au moins <strong>3 noms de fonctions différents</strong>.</li>
+      </ul>
+    </section>
 
-      <section id="format" class="panel">
-        <h2>Format</h2>
-        <p>Jeu de cartes pédagogique pour <strong>2 joueurs</strong>. Chaque joueur utilise un deck de <strong>21 cartes</strong> : <strong>Cyan</strong> pour la stabilité et le contrôle, <strong>Orange</strong> pour la pression et l’overflow.</p>
-      </section>
-
-      <section id="mise-en-place" class="panel">
-        <h2>1. Mise en place</h2>
-        <ul>
-          <li>Chaque joueur commence avec <strong>20 points de Noyau</strong>.</li>
-          <li>Chaque joueur mélange son deck de 21 cartes puis <strong>pioche 5 cartes</strong>.</li>
-          <li>Chaque joueur commence avec <strong>0 Énergie maximum</strong> et <strong>0 Énergie disponible</strong>.</li>
-          <li>Le joueur qui commence <strong>pioche bien une carte à son premier tour</strong>.</li>
-          <li>Place les cartes sur les zones prévues : deck, main, zone de Programmes, zone d’Artefact, défausse et pile d’appel.</li>
-        </ul>
-      </section>
-
-      <section id="types" class="panel">
-        <h2>2. Types de cartes</h2>
-        <ul>
-          <li><strong>Programme</strong> : unité posée sur la table. Elle possède une <strong>Puissance</strong> et une <strong>Intégrité</strong>.</li>
-          <li><strong>Commande</strong> : effet joué pendant ton propre tour.</li>
-          <li><strong>Interrupt</strong> : effet joué en réaction à une action, pendant n’importe quel tour si son coût peut être payé.</li>
-          <li><strong>Équipement</strong> : carte attachée à un Programme allié.</li>
-          <li><strong>Artefact</strong> : effet permanent posé dans ta zone d’Artefact.</li>
-        </ul>
-      </section>
-
-      <section id="zones" class="panel">
-        <h2>3. Zones et limites de jeu</h2>
-        <ul>
-          <li><strong>Zone de Programmes</strong> : <strong>4 Programmes maximum</strong> par joueur.</li>
-          <li><strong>Zone d’Artefact</strong> : <strong>1 Artefact actif maximum</strong> par joueur. Si tu en poses un nouveau, l’ancien est détruit.</li>
-          <li><strong>Pile d’appel</strong> : contient les branches récursives créées par les cartes.</li>
-          <li><strong>Défausse</strong> : reçoit les cartes détruites ou résolues, sauf mention contraire.</li>
-        </ul>
-      </section>
-
-      <section id="energie" class="panel">
-        <h2>4. Énergie</h2>
-        <ul>
-          <li>Au début de chacun de ses tours, un joueur augmente son <strong>Énergie maximum</strong> de 1.</li>
-          <li>Il fixe ensuite son <strong>Énergie disponible</strong> à ce maximum.</li>
-          <li><strong>L’Énergie non dépensée n’est pas perdue en fin de tour</strong> : elle reste disponible pendant le tour adverse pour jouer des Interrupts.</li>
-          <li>Si un effet fait gagner de l’Énergie, cette réserve peut dépasser temporairement le maximum jusqu’au début du prochain tour.</li>
-        </ul>
-      </section>
-
-      <section id="tour" class="panel">
-        <h2>5. Déroulement d’un tour</h2>
-        <ol>
-          <li><strong>Initialisation</strong> : redresser les Programmes engagés, +1 Énergie maximum, Énergie disponible fixée à ce maximum, puis piocher 1 carte.</li>
-          <li><strong>Déploiement</strong> : jouer des Programmes, Commandes, Équipements et Artefacts.</li>
-          <li><strong>Combat</strong> : attaquer avec les Programmes prêts.</li>
-          <li><strong>Exécution</strong> : résoudre la pile d’appel du joueur actif.</li>
-          <li><strong>Fin de tour</strong> : les effets temporaires cessent et tous les Programmes survivants récupèrent toute leur Intégrité.</li>
-        </ol>
-      </section>
-
-      <section id="combat" class="panel">
-        <h2>6. Programmes et combat</h2>
-        <ul>
-          <li>Un Programme qui vient d’entrer en jeu ne peut pas attaquer ce tour-ci, mais peut bloquer.</li>
-          <li>Quand un Programme attaque, il devient engagé.</li>
-          <li>Une attaque peut viser un Programme adverse ou le Noyau adverse.</li>
-          <li>Si l’attaque vise le Noyau, le défenseur peut déclarer <strong>un seul Programme non engagé</strong> comme bloqueur.</li>
-          <li>Quand deux Programmes s’affrontent, chacun inflige à l’autre un nombre de dégâts égal à sa Puissance.</li>
-          <li>Les dégâts sur les Programmes ne sont pas permanents : en fin de tour, tous les survivants récupèrent toute leur Intégrité.</li>
-        </ul>
-        <div class="callout ok">
-          <strong>Important :</strong> un Programme blessé mais non détruit revient à son intégrité maximale à la fin du tour. Les points de vie ne restent donc pas “grignotés” d’un tour à l’autre.
-        </div>
-      </section>
-
-      <section id="pile" class="panel">
-        <h2>7. La pile d’appel</h2>
-        <p>La pile d’appel est la zone où vivent les branches récursives. C’est le cœur du jeu.</p>
-        <ul>
-          <li><strong>Branche</strong> : ensemble des cadres créés par une même carte.</li>
-          <li><strong>Cas de base</strong> : effet du cadre <code>0</code>.</li>
-          <li><strong>Remontée</strong> : effet d’un cadre supérieur à <code>0</code>.</li>
-          <li><strong>Programme source</strong> : Programme à l’origine de la branche.</li>
-        </ul>
-      </section>
-
-      <section id="recompiler" class="panel">
-        <h2>8. Recompiler</h2>
-        <p>Certaines cartes indiquent <code>Recompiler X</code> ou <code>Recompiler jusqu’à X</code>.</p>
-        <ul>
-          <li><strong>Recompiler X</strong> : la profondeur est imposée. Exemple : <code>Recompiler 3</code> crée les cadres <code>[3][2][1][0]</code>.</li>
-          <li><strong>Recompiler jusqu’à X</strong> : le joueur choisit la profondeur au moment où il joue la carte. Plus la profondeur est grande, plus l’effet peut être puissant… et plus le risque d’overflow grimpe comme un singe surexcité sur une pile.</li>
-        </ul>
-      </section>
-
-      <section id="resolution" class="panel">
-        <h2>9. Résolution d’une branche</h2>
-        <ul>
-          <li>Pendant la phase d’Exécution, si ta pile d’appel n’est pas vide, tu résous <strong>jusqu’à 3 cadres</strong>, toujours en commençant par celui du sommet.</li>
-          <li><strong>Cadre 0</strong> : applique le Cas de base de la carte.</li>
-          <li><strong>Cadre supérieur à 0</strong> : applique la Remontée de la carte.</li>
-          <li>Une branche normale possède donc un seul Cas de base et autant de Remontées qu’il reste de cadres au-dessus de 0.</li>
-          <li>Les cartes ou effets qui ajoutent des cadres <strong>bugués</strong>, <strong>fantômes</strong> ou <strong>infinis</strong> modifient la taille de la pile selon leur texte propre.</li>
-        </ul>
-      </section>
-
-      <section id="interrupts" class="panel">
-        <h2>10. Interrupts</h2>
-        <p>Un Interrupt peut être joué en réaction à :</p>
-        <ul>
-          <li>une création de branche ;</li>
-          <li>une attaque ;</li>
-          <li>un Cas de base ;</li>
-          <li>une Remontée ;</li>
-          <li>un Overflow ;</li>
-          <li>un autre Interrupt, si son texte le permet.</li>
-        </ul>
-        <p>Les Interrupts se résolvent <strong>avant</strong> l’effet auquel ils répondent, et ils se paient avec l’Énergie disponible, y compris pendant le tour adverse.</p>
-      </section>
-
-      <section id="non-bornee" class="panel">
-        <h2>11. Branche non bornée</h2>
-        <p>Si une branche est privée de son cadre 0, ou si le Cas de base du cadre 0 est annulé avant sa résolution, la branche devient <strong>non bornée</strong>.</p>
-        <ul>
-          <li>Place un marqueur <strong>∞</strong> sur cette branche.</li>
-          <li>Une branche non bornée ne peut plus résoudre de Remontée.</li>
-          <li>Au début de chaque phase d’Exécution de son contrôleur, elle ajoute <strong>1 cadre ∞</strong> au sommet.</li>
-          <li>Les cadres ∞ comptent pour la taille de la pile et ne se résolvent pas.</li>
-        </ul>
-        <div class="callout warn">
-          <strong>Patch d’urgence :</strong> pendant ta phase de Déploiement, <strong>une fois par tour</strong>, tu peux payer <strong>2 Énergie</strong> pour réparer une de tes branches non bornées. Retire son marqueur ∞, retire tous ses cadres ∞, puis ajoute un cadre <code>0</code> au sommet de cette branche.
-        </div>
-      </section>
-
-      <section id="overflow" class="panel">
-        <h2>12. Overflow</h2>
-        <ul>
-          <li>Si un joueur doit ajouter un <strong>7e cadre</strong> à sa pile d’appel, il y a immédiatement Overflow.</li>
-          <li>La branche responsable est retirée de la pile.</li>
-          <li>Si sa source est un Programme, ce Programme est détruit.</li>
-          <li>Son contrôleur perd <strong>1 point de Noyau</strong>.</li>
-          <li>Si la source n’est pas un Programme en jeu, seule la branche est retirée et son contrôleur perd 1 point de Noyau.</li>
-        </ul>
-        <div class="callout">
-          <strong>Exemple :</strong> une branche atteint déjà 6 cadres. Un effet ajoute un nouveau cadre. La pile passe à 7 : <strong>Overflow</strong>. La branche saute, la source crashe si elle existe encore, et son contrôleur perd 1 point de Noyau.
-        </div>
-      </section>
-
-      <section id="clarifications" class="panel">
-        <h2>13. Clarifications officielles V4.1</h2>
-        <table>
-          <thead>
-            <tr>
-              <th>Point clarifié</th>
-              <th>Texte officiel retenu</th>
-            </tr>
-          </thead>
-          <tbody>
-            <tr>
-              <td>Cycle de Combat Fractal</td>
-              <td>Le cadre 0 inflige 1 dégât au Noyau adverse. Chaque Remontée donne +1 Puissance au Programme jusqu’à la fin de ton prochain tour.</td>
-            </tr>
-            <tr>
-              <td>Retour au Socle</td>
-              <td>Seuls les cadres 0 normaux ou fantômes retirés déclenchent leur Cas de base ; tous les autres cadres retirés n’ont aucun effet.</td>
-            </tr>
-            <tr>
-              <td>Défragmentation</td>
-              <td>Le texte officiel inclut la pioche : <em>annule cette Remontée, puis pioche 1 carte</em>.</td>
-            </tr>
-            <tr>
-              <td>Cadres bugués</td>
-              <td>Les cadres bugués ajoutés par Débordement Forcé et Stack Spike n’ont pas d’effet propre. Ils comptent seulement pour la taille de la pile.</td>
-            </tr>
-            <tr>
-              <td>Daemon du Débordement</td>
-              <td>À chaque fois qu’un joueur subit un Overflow, Daemon du Débordement lui inflige 1 dégât supplémentaire.</td>
-            </tr>
-            <tr>
-              <td>Rebond Infini</td>
-              <td>La carte est conservée. Elle annule le Cas de base d’un cadre 0, rend la branche non bornée et fait perdre 1 point de Noyau à son contrôleur.</td>
-            </tr>
-          </tbody>
-        </table>
-      </section>
-
-      <section id="aide" class="panel">
-        <h2>14. Aide de jeu rapide</h2>
-        <ul>
-          <li>Au début du tour : <strong>+1 Énergie maximum</strong>, Énergie disponible fixée à ce maximum, puis <strong>1 carte piochée</strong>.</li>
-          <li>Les Interrupts peuvent être payés pendant le tour adverse avec l’Énergie restante.</li>
-          <li>Une branche se résout du sommet vers le bas : <strong>0 = Cas de base</strong>, <strong>&gt; 0 = Remontée</strong>.</li>
-          <li>Sans Cas de base, une branche devient non bornée : elle ajoute des cadres ∞ et finit par menacer l’Overflow.</li>
-          <li><strong>Overflow au 7e cadre</strong> : la branche saute, la source Programme crashe si elle existe encore, et son contrôleur perd 1 point de Noyau.</li>
-        </ul>
-      </section>
-
-      <div class="footer">
-        Neon Stack — page de règles V4.1 pour GitHub Pages
+    <section>
+      <h2>3. Mémoire</h2>
+      <p>Chaque joueur commence avec <strong>20 mémoire totale</strong> et <strong>20 mémoire libre</strong>.</p>
+      <ul>
+        <li>Quand une fonction est lancée, son coût mémoire initial est réservé.</li>
+        <li>Chaque appel récursif supplémentaire coûte aussi de la mémoire.</li>
+        <li>Cette mémoire reste occupée tant que la fonction n'est pas terminée, nettoyée ou réparée.</li>
+      </ul>
+      <div class="callout small">
+        <strong>Distinction utile :</strong> la <em>mémoire totale</em> est la capacité maximale du joueur ; la <em>mémoire libre</em> est ce qu'il lui reste à un instant donné.
       </div>
-    </main>
-  </div>
+    </section>
+
+    <section>
+      <h2>4. Types de cartes</h2>
+      <div class="grid">
+        <div class="card"><strong>Fonction</strong><br>Carte centrale du programme, crée une pile d'appels.</div>
+        <div class="card"><strong>Commande</strong><br>Effet joué pendant ton tour.</div>
+        <div class="card"><strong>Interrupt</strong><br>Effet joué en réaction.</div>
+        <div class="card"><strong>Hardware</strong><br>Amélioration matérielle, souvent liée à la mémoire ou à la stabilité.</div>
+      </div>
+    </section>
+
+    <section>
+      <h2>5. Fonctions</h2>
+      <p>Une fonction possède généralement :</p>
+      <ul>
+        <li>un coût mémoire initial ;</li>
+        <li>une valeur de base en points ;</li>
+        <li>une mention <strong>Recompiler X</strong> ou <strong>Recompiler jusqu'à X</strong> ;</li>
+        <li>un cas de base ;</li>
+        <li>une remontée ;</li>
+        <li>un effet de terminaison.</li>
+      </ul>
+      <h3>Recompiler X</h3>
+      <p>La profondeur est imposée. Exemple : <span class="mono">Recompiler 3</span> crée la pile <span class="mono">[3][2][1][0]</span>.</p>
+      <h3>Recompiler jusqu'à X</h3>
+      <p>Le joueur choisit la profondeur au moment où il joue la carte. Cette profondeur choisie détermine le risque, le coût mémoire et le gain potentiel.</p>
+    </section>
+
+    <section>
+      <h2>6. Valeur de récursion</h2>
+      <p>On note <strong>R</strong> le nombre d'appels récursifs réellement effectués par une fonction. C'est cette valeur réelle, et non la profondeur théorique seule, qui sert à calculer son bonus final.</p>
+    </section>
+
+    <section>
+      <h2>7. Terminer une fonction</h2>
+      <p>Quand toute la pile d'une fonction a été résolue correctement :</p>
+      <ol>
+        <li>la fonction est terminée ;</li>
+        <li>son contrôleur marque ses points de base ;</li>
+        <li>il ajoute un bonus de récursion égal à <strong>F(R)</strong>, où <strong>F</strong> est la suite de Fibonacci classique ;</li>
+        <li>l'effet de terminaison de la carte est résolu avec une puissance <strong>F(R)</strong>, sauf indication contraire ;</li>
+        <li>la fonction est ensuite défaussée ;</li>
+        <li>toute la mémoire qu'elle occupait est libérée.</li>
+      </ol>
+      <table>
+        <thead>
+          <tr><th>R</th><th>F(R)</th></tr>
+        </thead>
+        <tbody>
+          <tr><td>0</td><td>0</td></tr>
+          <tr><td>1</td><td>1</td></tr>
+          <tr><td>2</td><td>1</td></tr>
+          <tr><td>3</td><td>2</td></tr>
+          <tr><td>4</td><td>3</td></tr>
+          <tr><td>5</td><td>5</td></tr>
+          <tr><td>6</td><td>8</td></tr>
+        </tbody>
+      </table>
+    </section>
+
+    <section>
+      <h2>8. Fonctions cassées</h2>
+      <p>Si une fonction subit un overflow, ne peut pas payer un appel récursif, ou est corrompue par un effet, elle devient <strong>cassée</strong>.</p>
+      <ul>
+        <li>Elle reste en jeu.</li>
+        <li>Elle ne peut plus être exécutée.</li>
+        <li>Elle ne rapporte aucun point.</li>
+        <li>Elle continue d'occuper toute la mémoire déjà engagée.</li>
+        <li>Elle compte toujours dans la limite des fonctions actives.</li>
+      </ul>
+      <div class="callout small warn"><strong>Conséquence :</strong> une fonction cassée agit comme une fuite de mémoire tant qu'elle n'est pas traitée.</div>
+    </section>
+
+    <section>
+      <h2>9. Nettoyer et réparer</h2>
+      <p><strong>Nettoyer</strong> une fonction cassée consiste à la défausser et à libérer toute sa mémoire.</p>
+      <p>Certaines cartes peuvent au contraire <strong>réparer</strong> une fonction cassée et la remettre en état de fonctionner.</p>
+    </section>
+
+    <section>
+      <h2>10. Limites conseillées</h2>
+      <ul>
+        <li><strong>3 fonctions actives maximum</strong> par joueur</li>
+        <li><strong>2 hardware actifs maximum</strong> par joueur</li>
+        <li><strong>7 cadres maximum</strong> dans une pile</li>
+        <li>si un <strong>8e cadre</strong> doit être ajouté : <strong>overflow</strong></li>
+      </ul>
+    </section>
+
+    <section>
+      <h2>11. Overflow</h2>
+      <p>Si une fonction devrait recevoir un <strong>8e cadre</strong>, il y a overflow :</p>
+      <ul>
+        <li>la fonction casse ;</li>
+        <li>sa pile cesse de se développer ;</li>
+        <li>elle reste en jeu comme fonction cassée ;</li>
+        <li>un marqueur d'overflow peut être placé pour le signaler.</li>
+      </ul>
+    </section>
+
+    <section>
+      <h2>12. Déroulement d'un tour</h2>
+      <ol>
+        <li><strong>Pioche</strong> : pioche 1 carte.</li>
+        <li><strong>Conception</strong> : joue des fonctions, commandes et hardware.</li>
+        <li><strong>Appels</strong> : ajoute des appels récursifs en payant la mémoire nécessaire.</li>
+        <li><strong>Exécution</strong> : résous jusqu'à 3 cadres au total.</li>
+        <li><strong>Fin de tour</strong> : les effets temporaires cessent.</li>
+      </ol>
+    </section>
+
+    <section>
+      <h2>13. Intention pédagogique</h2>
+      <ul>
+        <li>Une récursion plus profonde peut être rentable.</li>
+        <li>Elle consomme aussi davantage de ressources.</li>
+        <li>Une pile qui déborde ou une fonction cassée a un coût durable.</li>
+        <li>Il existe des outils de nettoyage et d'optimisation.</li>
+      </ul>
+      <p class="muted small">Document HTML ajouté au dépôt pour servir de version web des règles V5 alpha.</p>
+    </section>
+  </main>
 </body>
 </html>
