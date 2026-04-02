@@ -1,68 +1,22 @@
-NEON STACK — OpenSCAD kit aligned to V5 alpha gameplay
-======================================================
+NEON STACK — dépôt V5 alpha
 
-This repository snapshot updates the printable stack components so they match
-the new V5 alpha direction of the game:
-- no duel of Programs/Creatures anymore
-- the game is centered on call stacks and recursive depth
-- players manage Memory instead of Energy
-- a completed Function scores points only when its stack becomes empty
-- broken Functions remain in memory until cleaned
-- Fibonacci is used as the default recursion reward curve
-- players split a shared CPU budget between push and pop actions
+Cette version du dépôt correspond à une refonte du jeu centrée sur :
+- les fonctions
+- la pile d'appels
+- la mémoire
+- les Cycles CPU
+- les fonctions cassées
+- le bonus de récursion en Fibonacci classique
 
-Core gameplay assumptions reflected by this kit
-----------------------------------------------
-- Each player starts with 20 total Memory and 20 free Memory.
-- Overflow happens when a Function would receive an 8th frame.
-  => practical safe visible depth is therefore 0..6.
-- Numbered frames are now intended for recursive depth markers 0 to 6.
-- Bases represent active Function slots / branches.
-- BUG pieces are used for broken functions / corrupted stack state.
-- Infinite frames are used for unbounded recursion / leaking branches.
-- Overflow rings remain separate event markers.
+Fichiers principaux :
+- RULES_V5_ALPHA.md : règles alpha à jour
+- CARD_SET_V5_TEXT_ONLY.md : set complet de cartes, version texte-only
+- CARD_SET_V5_TEXT_ONLY.csv : même set au format tabulaire
+- COMPONENT_COUNTS_V5_ALPHA.md : comptage des pièces imprimables
+- CARD_MIGRATION_NOTES_V5.md : notes de migration depuis V4
+- generate_all.scad : génération des pièces OpenSCAD
+- regles.html : version HTML simple des règles alpha
 
-Files
------
-- neonstack_common.scad   -> shared geometry, colors, helper modules
-- frame_numbered.scad     -> numbered frame (set number="0".."6")
-- frame_ghost0.scad       -> ghost frame with small 0
-- frame_infinite.scad     -> infinite frame
-- frame_bug.scad          -> bug / broken-state frame
-- ring_overflow.scad      -> overflow marker ring
-- branch_base.scad        -> function slot / branch base
-- generate_all.scad       -> catalog and printable player kits
-- RULES_V5_ALPHA.md       -> alpha rules reference for the redesigned game
-- COMPONENT_COUNTS_V5_ALPHA.md -> suggested print counts per player
-- CARD_MIGRATION_NOTES_V5.md   -> guidance for migrating the old card set
-
-Recommended first step
-----------------------
-- Open generate_all.scad
-- Try mode = "catalog_dual"
-- Then export kit_cyan and kit_orange separately for slicing
-
-Important note
---------------
-- Colors are preview colors in OpenSCAD only.
-- STL does not preserve color.
-- Export cyan and orange parts separately for real two-color printing.
-
-Useful parameters in neonstack_common.scad
------------------------------------------
-- carrier_ff_normal / carrier_ff_special  -> central support plate sizes
-- carrier_branch_w                        -> branch width
-- socket_d                                -> loosen/tighten stacking fit
-
-Mechanical notes retained from v6
----------------------------------
-- alignment pegs stay in the solid outer ring of each frame
-- matching sockets stay on top of each frame and in the branch base
-- the goal remains reliable interlocking for FDM prints
-
-
-Rules note
-----------
-- Rule terminology now uses Empiler / Dépiler instead of the earlier Recompiler wording.
-- The base case is the last frame pushed and the first frame popped.
-- The major function effect happens on termination, when the initial frame is finally popped.
+Remarque importante :
+les cartes de cette version sont encore un prototype d'équilibrage.
+Les textes sont conçus pour être testés rapidement sans graphisme.
