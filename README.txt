@@ -6,9 +6,10 @@ the new V5 alpha direction of the game:
 - no duel of Programs/Creatures anymore
 - the game is centered on call stacks and recursive depth
 - players manage Memory instead of Energy
-- a completed Function scores points
+- a completed Function scores points only when its stack becomes empty
 - broken Functions remain in memory until cleaned
 - Fibonacci is used as the default recursion reward curve
+- players split a shared CPU budget between push and pop actions
 
 Core gameplay assumptions reflected by this kit
 ----------------------------------------------
@@ -58,3 +59,10 @@ Mechanical notes retained from v6
 - alignment pegs stay in the solid outer ring of each frame
 - matching sockets stay on top of each frame and in the branch base
 - the goal remains reliable interlocking for FDM prints
+
+
+Rules note
+----------
+- Rule terminology now uses Empiler / Dépiler instead of the earlier Recompiler wording.
+- The base case is the last frame pushed and the first frame popped.
+- The major function effect happens on termination, when the initial frame is finally popped.

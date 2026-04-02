@@ -27,7 +27,7 @@
         linear-gradient(180deg, #11151d 0%, #0b0e14 100%);
     }
     main {
-      max-width: 980px;
+      max-width: 1040px;
       margin: 0 auto;
       padding: 2rem 1rem 4rem;
     }
@@ -61,7 +61,6 @@
       padding: 0.85rem 1rem;
       border-radius: 12px;
     }
-    .good { color: var(--good); }
     .warn { color: var(--warn); }
     code, .mono {
       font-family: ui-monospace, SFMono-Regular, Menlo, Consolas, monospace;
@@ -91,17 +90,17 @@
   <main>
     <header>
       <h1>NEON STACK — Règles V5 alpha</h1>
-      <p class="muted">Version alpha centrée sur la pile d'appels, la mémoire, les fonctions cassées et un bonus de récursion fondé sur la suite de Fibonacci classique.</p>
+      <p class="muted">Version alpha centrée sur la pile d'appels, la mémoire, les cycles CPU, les fonctions cassées et un bonus de récursion fondé sur la suite de Fibonacci classique.</p>
       <div class="grid">
         <div class="card"><strong>Victoire</strong><br>21 points, avec au moins 4 fonctions terminées et 3 noms différents.</div>
-        <div class="card"><strong>Mémoire de départ</strong><br>20 mémoire totale / 20 mémoire libre.</div>
+        <div class="card"><strong>Départ</strong><br>20 mémoire totale / 20 mémoire libre / 4 Cycles CPU.</div>
         <div class="card"><strong>Overflow</strong><br>Au 8e cadre ajouté à une pile.</div>
       </div>
     </header>
 
     <section>
       <h2>1. Idée générale</h2>
-      <p>Chaque joueur conçoit un programme en terminant plusieurs <strong>fonctions</strong>. Le jeu ne repose plus sur un combat de programmes, mais sur la gestion de la <strong>mémoire</strong>, de la <strong>pile d'appels</strong>, des fonctions cassées et des effets de récursion.</p>
+      <p>Chaque joueur construit un programme en menant à bien plusieurs <strong>fonctions</strong>. Le cœur du jeu n'est plus un combat de créatures : il repose sur la gestion de la <strong>mémoire</strong>, de la <strong>pile d'appels</strong>, des <strong>cycles CPU</strong>, des <strong>fonctions cassées</strong> et du bon moment pour <strong>empiler</strong> ou <strong>dépiler</strong>.</p>
     </section>
 
     <section>
@@ -114,12 +113,34 @@
     </section>
 
     <section>
-      <h2>3. Mémoire</h2>
+      <h2>3. Format conseillé</h2>
+      <ul>
+        <li><strong>2 joueurs</strong></li>
+        <li><strong>34 cartes par deck</strong></li>
+        <li><strong>5 cartes en main de départ</strong></li>
+        <li><strong>3 fonctions actives maximum</strong> par joueur</li>
+        <li><strong>2 Hardware actifs maximum</strong> par joueur</li>
+      </ul>
+    </section>
+
+    <section>
+      <h2>4. Types de cartes</h2>
+      <div class="grid">
+        <div class="card"><strong>Fonction</strong><br>Carte centrale du jeu ; elle crée et exploite une pile d'appels.</div>
+        <div class="card"><strong>Commande</strong><br>Effet joué pendant ton tour.</div>
+        <div class="card"><strong>Interrupt</strong><br>Effet joué en réaction, si son texte le permet.</div>
+        <div class="card"><strong>Hardware</strong><br>Amélioration matérielle qui modifie surtout la mémoire, les cycles CPU ou la stabilité.</div>
+      </div>
+    </section>
+
+    <section>
+      <h2>5. Mémoire</h2>
       <p>Chaque joueur commence avec <strong>20 mémoire totale</strong> et <strong>20 mémoire libre</strong>.</p>
       <ul>
-        <li>Quand une fonction est lancée, son coût mémoire initial est réservé.</li>
-        <li>Chaque appel récursif supplémentaire coûte aussi de la mémoire.</li>
-        <li>Cette mémoire reste occupée tant que la fonction n'est pas terminée, nettoyée ou réparée.</li>
+        <li>Lancer une fonction coûte sa <strong>mémoire initiale</strong>.</li>
+        <li>Chaque nouvel empilage récursif coûte <strong>1 mémoire</strong>.</li>
+        <li>Quand un cadre est dépilé, la mémoire de ce cadre est libérée.</li>
+        <li>Une fonction cassée continue d'occuper sa mémoire tant qu'elle n'est pas nettoyée ou réparée.</li>
       </ul>
       <div class="callout small">
         <strong>Distinction utile :</strong> la <em>mémoire totale</em> est la capacité maximale du joueur ; la <em>mémoire libre</em> est ce qu'il lui reste à un instant donné.
@@ -127,48 +148,75 @@
     </section>
 
     <section>
-      <h2>4. Types de cartes</h2>
-      <div class="grid">
-        <div class="card"><strong>Fonction</strong><br>Carte centrale du programme, crée une pile d'appels.</div>
-        <div class="card"><strong>Commande</strong><br>Effet joué pendant ton tour.</div>
-        <div class="card"><strong>Interrupt</strong><br>Effet joué en réaction.</div>
-        <div class="card"><strong>Hardware</strong><br>Amélioration matérielle, souvent liée à la mémoire ou à la stabilité.</div>
+      <h2>6. Cycles CPU</h2>
+      <p>Chaque joueur commence son tour avec <strong>4 Cycles CPU</strong>.</p>
+      <ul>
+        <li><strong>Empiler</strong> un cadre sur une fonction coûte <strong>1 cycle</strong>.</li>
+        <li><strong>Dépiler</strong> le cadre du sommet d'une fonction coûte <strong>1 cycle</strong>.</li>
+        <li>Les cycles non utilisés sont perdus à la fin du tour.</li>
+        <li>Sauf effet contraire, un joueur ne peut pas dépasser <strong>6 Cycles CPU</strong> par tour.</li>
+      </ul>
+    </section>
+
+    <section>
+      <h2>7. Lancer une fonction</h2>
+      <ol>
+        <li>Paie son coût mémoire initial.</li>
+        <li>Choisis sa profondeur cible si elle porte la mention <strong>Empiler jusqu'à X</strong>.</li>
+        <li>Place son <strong>cadre initial</strong> dans ta zone de fonctions.</li>
+      </ol>
+      <p>Une fonction avec <span class="mono">Empiler 3</span> commence donc avec le cadre initial <span class="mono">[3]</span>. Elle ne reçoit les cadres suivants qu'au fil des actions d'empilage.</p>
+    </section>
+
+    <section>
+      <h2>8. Empiler</h2>
+      <h3>Empiler X</h3>
+      <p>La profondeur cible est imposée. Exemple : <span class="mono">Empiler 3</span> vise la suite <span class="mono">[3][2][1][0]</span>.</p>
+      <h3>Empiler jusqu'à X</h3>
+      <p>Le joueur choisit, quand il joue la carte, une profondeur cible comprise entre <strong>0</strong> et <strong>X</strong>.</p>
+      <h3>Empilage progressif</h3>
+      <p>Un <strong>Empiler</strong> ajoute le cadre suivant sur la pile.</p>
+      <table>
+        <thead>
+          <tr><th>Étape</th><th>Pile d'une fonction jouée à profondeur 3</th></tr>
+        </thead>
+        <tbody>
+          <tr><td>Lancement</td><td><span class="mono">[3]</span></td></tr>
+          <tr><td>1er empilage</td><td><span class="mono">[3][2]</span></td></tr>
+          <tr><td>2e empilage</td><td><span class="mono">[3][2][1]</span></td></tr>
+          <tr><td>3e empilage</td><td><span class="mono">[3][2][1][0]</span></td></tr>
+        </tbody>
+      </table>
+      <p>Tant que le cadre <span class="mono">0</span> n'a pas été empilé, la fonction ne peut pas être dépilée.</p>
+    </section>
+
+    <section>
+      <h2>9. Dépiler</h2>
+      <p><strong>Dépiler</strong> consiste à retirer le cadre du sommet d'une pile pour le résoudre.</p>
+      <ul>
+        <li>si le cadre retiré est <span class="mono">0</span>, on applique son <strong>Cas de base</strong> ;</li>
+        <li>si le cadre retiré est supérieur à <span class="mono">0</span>, on applique sa <strong>Remontée</strong>.</li>
+      </ul>
+      <div class="callout small">
+        Le <strong>cas de base</strong> est donc le <strong>dernier cadre empilé</strong> et le <strong>premier cadre dépilé</strong>.
       </div>
     </section>
 
     <section>
-      <h2>5. Fonctions</h2>
-      <p>Une fonction possède généralement :</p>
-      <ul>
-        <li>un coût mémoire initial ;</li>
-        <li>une valeur de base en points ;</li>
-        <li>une mention <strong>Recompiler X</strong> ou <strong>Recompiler jusqu'à X</strong> ;</li>
-        <li>un cas de base ;</li>
-        <li>une remontée ;</li>
-        <li>un effet de terminaison.</li>
-      </ul>
-      <h3>Recompiler X</h3>
-      <p>La profondeur est imposée. Exemple : <span class="mono">Recompiler 3</span> crée la pile <span class="mono">[3][2][1][0]</span>.</p>
-      <h3>Recompiler jusqu'à X</h3>
-      <p>Le joueur choisit la profondeur au moment où il joue la carte. Cette profondeur choisie détermine le risque, le coût mémoire et le gain potentiel.</p>
-    </section>
-
-    <section>
-      <h2>6. Valeur de récursion</h2>
-      <p>On note <strong>R</strong> le nombre d'appels récursifs réellement effectués par une fonction. C'est cette valeur réelle, et non la profondeur théorique seule, qui sert à calculer son bonus final.</p>
-    </section>
-
-    <section>
-      <h2>7. Terminer une fonction</h2>
-      <p>Quand toute la pile d'une fonction a été résolue correctement :</p>
+      <h2>10. Terminaison d'une fonction</h2>
+      <p>Une fonction n'est <strong>pas</strong> terminée quand son cas de base est résolu. Elle est terminée seulement quand son <strong>cadre initial</strong>, c'est-à-dire le premier cadre empilé, est à son tour dépilé et que sa pile devient vide.</p>
       <ol>
-        <li>la fonction est terminée ;</li>
-        <li>son contrôleur marque ses points de base ;</li>
-        <li>il ajoute un bonus de récursion égal à <strong>F(R)</strong>, où <strong>F</strong> est la suite de Fibonacci classique ;</li>
-        <li>l'effet de terminaison de la carte est résolu avec une puissance <strong>F(R)</strong>, sauf indication contraire ;</li>
-        <li>la fonction est ensuite défaussée ;</li>
-        <li>toute la mémoire qu'elle occupait est libérée.</li>
+        <li>la fonction marque ses <strong>points de base</strong> ;</li>
+        <li>son contrôleur ajoute un bonus de récursion égal à <strong>F(R)</strong> ;</li>
+        <li>l'<strong>effet de terminaison</strong> de la carte est résolu avec une puissance <strong>F(R)</strong>, sauf indication contraire ;</li>
+        <li>la fonction est défaussée ;</li>
+        <li>toute la mémoire encore associée à cette fonction est libérée.</li>
       </ol>
+    </section>
+
+    <section>
+      <h2>11. Valeur de récursion et Fibonacci</h2>
+      <p>On note <strong>R</strong> le nombre d'<strong>appels récursifs réellement effectués</strong> par une fonction. Concrètement, <strong>R</strong> est le nombre de cadres ajoutés <strong>après le cadre initial</strong>.</p>
       <table>
         <thead>
           <tr><th>R</th><th>F(R)</th></tr>
@@ -186,65 +234,73 @@
     </section>
 
     <section>
-      <h2>8. Fonctions cassées</h2>
-      <p>Si une fonction subit un overflow, ne peut pas payer un appel récursif, ou est corrompue par un effet, elle devient <strong>cassée</strong>.</p>
+      <h2>12. Effets pendant l'exécution</h2>
       <ul>
-        <li>Elle reste en jeu.</li>
-        <li>Elle ne peut plus être exécutée.</li>
+        <li><strong>Cas de base</strong> : quand le cadre <span class="mono">0</span> est dépilé.</li>
+        <li><strong>Remontée</strong> : quand un cadre supérieur à <span class="mono">0</span> est dépilé.</li>
+        <li><strong>Terminaison</strong> : seulement quand la pile devient vide.</li>
+      </ul>
+      <div class="callout small warn"><strong>Conséquence :</strong> les gros effets et les points n'arrivent qu'à la fin complète de la fonction.</div>
+    </section>
+
+    <section>
+      <h2>13. Overflow et fonctions cassées</h2>
+      <p>Une pile peut contenir <strong>7 cadres maximum</strong>. Si un <strong>8e cadre</strong> devait être ajouté, il y a <strong>Overflow</strong>.</p>
+      <p>Une fonction devient aussi <strong>cassée</strong> si elle doit empiler un cadre sans mémoire libre suffisante, ou si un effet la corrompt explicitement.</p>
+      <ul>
+        <li>Une fonction cassée reste en jeu.</li>
+        <li>Elle ne peut plus être empilée ni dépilée.</li>
         <li>Elle ne rapporte aucun point.</li>
-        <li>Elle continue d'occuper toute la mémoire déjà engagée.</li>
-        <li>Elle compte toujours dans la limite des fonctions actives.</li>
-      </ul>
-      <div class="callout small warn"><strong>Conséquence :</strong> une fonction cassée agit comme une fuite de mémoire tant qu'elle n'est pas traitée.</div>
-    </section>
-
-    <section>
-      <h2>9. Nettoyer et réparer</h2>
-      <p><strong>Nettoyer</strong> une fonction cassée consiste à la défausser et à libérer toute sa mémoire.</p>
-      <p>Certaines cartes peuvent au contraire <strong>réparer</strong> une fonction cassée et la remettre en état de fonctionner.</p>
-    </section>
-
-    <section>
-      <h2>10. Limites conseillées</h2>
-      <ul>
-        <li><strong>3 fonctions actives maximum</strong> par joueur</li>
-        <li><strong>2 hardware actifs maximum</strong> par joueur</li>
-        <li><strong>7 cadres maximum</strong> dans une pile</li>
-        <li>si un <strong>8e cadre</strong> doit être ajouté : <strong>overflow</strong></li>
+        <li>Elle n'applique aucun effet de terminaison.</li>
+        <li>Elle continue d'occuper sa mémoire.</li>
       </ul>
     </section>
 
     <section>
-      <h2>11. Overflow</h2>
-      <p>Si une fonction devrait recevoir un <strong>8e cadre</strong>, il y a overflow :</p>
-      <ul>
-        <li>la fonction casse ;</li>
-        <li>sa pile cesse de se développer ;</li>
-        <li>elle reste en jeu comme fonction cassée ;</li>
-        <li>un marqueur d'overflow peut être placé pour le signaler.</li>
-      </ul>
+      <h2>14. Nettoyer et réparer</h2>
+      <p><strong>Nettoyer</strong> une fonction cassée consiste à la défausser ; toute sa mémoire est alors libérée.</p>
+      <p><strong>Réparer</strong> une fonction cassée consiste à la remettre en état, selon le texte d'une carte.</p>
     </section>
 
     <section>
-      <h2>12. Déroulement d'un tour</h2>
+      <h2>15. Déroulement d'un tour</h2>
       <ol>
         <li><strong>Pioche</strong> : pioche 1 carte.</li>
-        <li><strong>Conception</strong> : joue des fonctions, commandes et hardware.</li>
-        <li><strong>Appels</strong> : ajoute des appels récursifs en payant la mémoire nécessaire.</li>
-        <li><strong>Exécution</strong> : résous jusqu'à 3 cadres au total.</li>
-        <li><strong>Fin de tour</strong> : les effets temporaires cessent.</li>
+        <li><strong>Conception</strong> : joue des Fonctions, des Commandes et des Hardware.</li>
+        <li><strong>Planification CPU</strong> : dépense tes <strong>4 Cycles CPU</strong> comme tu le souhaites pour empiler et dépiler.</li>
+        <li><strong>Fin de tour</strong> : les effets temporaires expirent ; les cycles non utilisés sont perdus.</li>
       </ol>
     </section>
 
     <section>
-      <h2>13. Intention pédagogique</h2>
+      <h2>16. Exemple de tour</h2>
+      <p>Tu commences ton tour avec :</p>
       <ul>
-        <li>Une récursion plus profonde peut être rentable.</li>
-        <li>Elle consomme aussi davantage de ressources.</li>
-        <li>Une pile qui déborde ou une fonction cassée a un coût durable.</li>
-        <li>Il existe des outils de nettoyage et d'optimisation.</li>
+        <li><strong>12 mémoire libre</strong> sur tes 20 ;</li>
+        <li><strong>4 Cycles CPU</strong> ;</li>
+        <li>une <strong>Routine Factorielle</strong> avec la pile <span class="mono">[3][2][1][0]</span> ;</li>
+        <li>une <strong>Recherche Bornée</strong> avec seulement le cadre initial <span class="mono">[2]</span>.</li>
       </ul>
-      <p class="muted small">Document HTML ajouté au dépôt pour servir de version web des règles V5 alpha.</p>
+      <p>Tu choisis de dépenser tes cycles ainsi :</p>
+      <ol>
+        <li><strong>Empiler</strong> sur Recherche Bornée : sa pile devient <span class="mono">[2][1]</span> et tu paies <strong>1 mémoire</strong>.</li>
+        <li><strong>Dépiler</strong> le cadre <span class="mono">0</span> de Routine Factorielle : tu appliques son <strong>Cas de base</strong>.</li>
+        <li><strong>Dépiler</strong> le cadre <span class="mono">1</span> : tu appliques sa <strong>Remontée</strong>.</li>
+        <li><strong>Dépiler</strong> le cadre <span class="mono">2</span> : tu appliques une seconde <strong>Remontée</strong>.</li>
+      </ol>
+      <p>À la fin du tour, il reste encore le cadre initial <span class="mono">[3]</span> sur Routine Factorielle. La fonction n'est donc <strong>pas encore terminée</strong>. Quand tu dépileras ce dernier cadre lors d'un tour ultérieur, la pile deviendra vide, tu marqueras ses points de base, tu ajouteras le bonus <strong>F(3)=2</strong> et tu résoudras son effet de terminaison.</p>
+    </section>
+
+    <section>
+      <h2>17. Intention pédagogique</h2>
+      <ul>
+        <li>La récursivité consomme de la mémoire.</li>
+        <li>La pile d'appels se construit puis se vide dans un ordre précis.</li>
+        <li>La profondeur augmente le gain potentiel.</li>
+        <li>La prise de risque peut être rentable, mais elle expose à l'overflow.</li>
+        <li>Une fonction cassée est une fuite de mémoire qu'il faut traiter.</li>
+      </ul>
+      <p class="muted small">Document HTML aligné sur les règles V5 alpha du dépôt.</p>
     </section>
   </main>
 </body>
