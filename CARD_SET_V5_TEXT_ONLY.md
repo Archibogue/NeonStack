@@ -111,7 +111,7 @@ Version sans graphisme, conçue pour la V5 alpha centrée sur :
 - Cette fonction revient avec son cadre initial seulement.
 - Sa mémoire initiale reste réservée.
 
-## Pause de Sécurité ×2
+## Pause de Sécurité ×1
 **Interrupt** — coût 2
 - Joue cette carte quand un adversaire effectue un **Empiler**.
 - Annule cet **Empiler**.
@@ -252,7 +252,7 @@ Version sans graphisme, conçue pour la V5 alpha centrée sur :
 - Nettoyeur Générationnel ×1
 - Purge Contrôlée ×2
 - Hotfix ×2
-- Pause de Sécurité ×2
+- Pause de Sécurité ×1
 - Défragmentation ×2
 - Console de Diagnostic ×1
 - ECC Mémoire ×1

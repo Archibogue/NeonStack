@@ -1,4 +1,4 @@
-deck,qty,name,type,cost_memory_initial_or_cost,base_value_or_dash,depth,cas_de_base,remontee,terminaison
+﻿deck,qty,name,type,cost_memory_initial_or_cost,base_value_or_dash,depth,cas_de_base,remontee,terminaison
 Commun,2,Routine Sentinelle,Fonction,2,1,Empiler jusqu'à 2,"Regarde la carte du dessus de ton deck. Tu peux la laisser ou la mettre dessous.","Gagne 1 mémoire libre.","Pioche F(R) carte(s)."
 Commun,2,Fonction Factorielle,Fonction,3,2,Empiler jusqu'à 4,"Pioche 1 carte.","Gagne 1 mémoire libre.","Gagne F(R) mémoire libre jusqu'à la fin du tour."
 Commun,2,Vérification de Bornes,Fonction,2,1,Empiler jusqu'à 3,"Retire 1 cadre parasite de cette fonction.","Tu peux regarder le sommet d'une autre de tes fonctions.","Retire jusqu'à F(R) cadres parasites répartis comme tu veux parmi tes fonctions."
@@ -15,7 +15,7 @@ Cyan,1,Inspecteur de Pile,Fonction,2,1,Empiler jusqu'à 2,"Regarde le sommet d'u
 Cyan,1,Nettoyeur Générationnel,Fonction,4,3,Empiler jusqu'à 5,"Nettoie une de tes fonctions cassées.","Gagne 1 mémoire libre.","Pioche F(R) carte(s)."
 Cyan,2,Purge Contrôlée,Commande,2,-,-,"Retire jusqu'à 2 cadres parasites d'une fonction.",-,"Si aucun cadre parasite n'a été retiré, pioche 1 carte."
 Cyan,2,Hotfix,Commande,3,-,-,"Répare une de tes fonctions cassées.","Cette fonction revient avec son cadre initial seulement.","Sa mémoire initiale reste réservée."
-Cyan,2,Pause de Sécurité,Interrupt,2,-,-,"Quand un adversaire effectue un Empiler, annule cet Empiler.","Le coût en Cycle CPU est quand même payé.",-
+Cyan,1,Pause de Sécurité,Interrupt,2,-,-,"Quand un adversaire effectue un Empiler, annule cet Empiler.","Le coût en Cycle CPU est quand même payé.",-
 Cyan,2,Défragmentation,Interrupt,2,-,-,"Quand un adversaire dépile une Remontée, annule l'effet de cette Remontée.","La mémoire normalement libérée par ce cadre est quand même libérée.",-
 Cyan,1,Console de Diagnostic,Hardware,2,-,-,"Une fois par tour, quand tu lances une fonction portant la mention Empiler jusqu'à X, tu peux augmenter ou réduire sa profondeur cible de 1, sans sortir de l'intervalle autorisé.",-,-
 Cyan,1,ECC Mémoire,Hardware,3,-,-,"La première fois à chaque tour qu'une de tes fonctions devrait casser, annule cette casse.","Ajoute à la place 1 cadre parasite au sommet de cette fonction.",-
