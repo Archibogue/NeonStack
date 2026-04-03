@@ -1,4 +1,4 @@
-# NEON STACK — Règles V5.1
+# NEON STACK — Règles officielles V5.1
 
 ## 1. Idée générale
 Chaque joueur construit un **programme** en lançant, en empilant, puis en terminant plusieurs **fonctions**.
