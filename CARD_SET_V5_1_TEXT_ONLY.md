@@ -294,3 +294,30 @@ Version sans graphisme, harmonisée pour la V5.1 centrée sur :
 - Le deck **Cyan** devrait gagner par régularité, réparation et rendement.
 - Le deck **Orange** devrait gagner par pression de pile, tempo CPU et sabotage.
 - Les cartes qui forcent des bonds de profondeur ou des gros swings de mémoire doivent rester rares, car le bonus en Fibonacci classique augmente déjà fortement la récompense des fonctions profondes.
+
+
+
+## Idée de cartes
+Bug : Commande : Cible uniquement une fonction qui est à un niveau supérieure à 1 et n’a pas encore atteint son cas de base.
+La fonction cible reçoit un cadre supplémentaire de même niveau que son cadre actuel. Si la fonction dépile ce cadre, elle plante, garde uniquement son cadre intial et perd tous ses cadres sans récompenses.
+
+Debug Pas à Pas : Commande : Cible une fonction.
+A chaque fois que la fonction cible dépile, elle dépile tous les cadres de même valeur en même temps.
+
+Debug : Interrupt : Cible un cadre d’une fonction.
+Retire le cadre cible.
+
+Fork : Commande : Cible une fonction
+Double la mémoire nécessaire de chaque futur cadre empilé
+
+Parrallélisme : Commande : Cible une fonction
+Si la fonction devait être empiler, empiler deux fois. Si la fonction devait être dépiler, dépiler deux fois
+
+Scan : Interrupt : Cible le cadre d’une fonction
+Empêche de cibler la fonction cible jusqu’au prochain tour
+
+Anti-virus : Commande : Cible une fonction
+Si la fonction devait être la cible d’une commande ou d’un interrupt, le coup en mémoire de ces cartes est augmenté de deux.
+
+Virus : Commande : Cible une fonction
+Casse une fonction
