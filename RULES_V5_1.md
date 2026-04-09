@@ -28,7 +28,8 @@ Chaque joueur mélange son deck et pioche **5 cartes**.
 
 Le premier joueur est désigné **aléatoirement**.
 
-Chaque joueur peut effectuer **un mulligan une seule fois** au début de la partie : il remélange sa main dans son deck puis repioche **4 cartes**.
+Chaque joueur peut effectuer **un mulligan une seule fois** au début de la partie : 
+il remélange sa main dans son deck puis pioche 5 nouvelles cartes, et met à la fin de sa pioche une carte de son choix.
 
 Le **premier joueur ne pioche pas** à son premier tour.
 
@@ -36,8 +37,8 @@ Si un joueur doit piocher alors que son deck est vide, il **perd immédiatement 
 
 ## 4. Mémoire
 Chaque joueur commence avec :
-- **20 mémoire totale** ;
-- **20 mémoire libre**.
+- **15 mémoire totale** ;
+- **15 mémoire libre**.
 
 La mémoire libre sert à payer :
 - les **cartes** ;
@@ -54,7 +55,6 @@ Quand une fonction est lancée :
 - cette mémoire reste occupée tant que la fonction n'est pas terminée, nettoyée ou réparée.
 
 Chaque **Empiler** supplémentaire sur cette fonction coûte :
-- **1 Cycle CPU** ;
 - **1 mémoire libre** ;
 et ajoute un cadre à sa pile.
 
@@ -80,22 +80,13 @@ Il existe quatre types de cartes :
 
 Le coût imprimé sur une carte est payé en **mémoire libre**, sauf mention contraire.
 
-## 6. Cycles CPU
-Chaque joueur dispose de **4 Cycles CPU** au début de chacun de ses tours.
+Idée :
+- **Interrupt** : Carte pouvant être jouée à n’importe quel moment. La mémoire utilisée pour la jouer est libérée au début du prochain tour du joueur qui l’a lancée.
 
-Pendant son tour, un joueur peut dépenser ses Cycles CPU pour :
-- **Empiler** sur une fonction : **1 cycle** ;
-- **Dépiler** un cadre : **1 cycle**.
+- **Commande** : Carte jouable uniquement pendant son tour. La mémoire utilisée reste occupée tant que l’effet de la carte est actif (par exemple jusqu’à ce que l’effet soit annulé par une autre carte ou qu’une fonction se termine).
 
-Le joueur répartit librement ses cycles entre empilage et dépilage, dans les limites fixées par les règles.
 
-Les cycles non utilisés sont perdus à la fin du tour.
-
-Certains Hardware peuvent augmenter ce nombre ou rendre certaines actions gratuites.
-
-Un joueur ne peut jamais dépasser **6 Cycles CPU** pendant un tour, sauf mention contraire d'une carte.
-
-## 7. Fonctions actives et Hardware
+## 6. Fonctions actives et Hardware
 Un joueur peut contrôler au maximum :
 - **3 fonctions actives** ;
 - **2 Hardware actifs**.
@@ -106,13 +97,21 @@ Une Fonction active **ne peut pas être défaussée volontairement** tant qu'ell
 
 Si un joueur joue un Hardware alors qu'il en contrôle déjà **2**, il choisit immédiatement un de ses Hardware actifs et le met en défausse.
 
+## 7. Cycles CPU
+## Mise à jour des cartes Fonction
+
+Au début du tour de chaque joueur, on met obligatoirement à jour toutes les **cartes Fonction actives** de ce joueur.
+
+- Si la profondeur maximale de la carte n’est pas encore atteinte, on ajoute un niveau à sa pile *(empiler)*.
+- Si la profondeur maximale est atteinte **[0]**, on retire un niveau de la pile *(dépiler)*.
+
 ## 8. Empiler et dépiler
 ### 8.1 Empiler X
 **Empiler X** signifie qu'une fonction a une profondeur cible fixe de **X**.
 
 Quand elle est lancée, on place son cadre initial **[X]**.
 
-Puis, en dépensant des Cycles CPU et de la mémoire libre, on peut empiler successivement **[X-1]**, **[X-2]**, et ainsi de suite jusqu'à **[0]**.
+Puis, à chaque tour en échange de mémoire libre, on peut empiler successivement **[X-1]**, **[X-2]**, et ainsi de suite jusqu'à **[0]**.
 
 ### 8.2 Empiler jusqu'à X
 **Empiler jusqu'à X** signifie que le joueur choisit, au lancement de la fonction, une profondeur cible comprise entre **0** et **X**.
@@ -127,7 +126,7 @@ Une fonction **ne peut pas être dépilée tant qu'elle n'a pas atteint son cadr
 
 Une fois le cadre **[0]** empilé, la fonction entre en **phase de remontée**.
 
-Une fonction en phase de remontée **ne peut plus recevoir d'Empiler normal** par dépense de Cycle CPU.
+Une fonction en phase de remontée **ne peut plus recevoir d'Empiler normal**.
 
 Seuls les **effets de cartes** peuvent encore lui ajouter des cadres après cela.
 
@@ -190,7 +189,7 @@ Une fonction cassée :
 - continue d'occuper toute la mémoire déjà engagée ;
 - compte toujours dans la limite des fonctions actives.
 
-## 14. Nettoyer et réparer
+## 14. Nettoyer, réparer et reboot
 **Nettoyer** une fonction cassée consiste à la défausser ; toute sa mémoire est alors libérée.
 
 **Réparer** une fonction cassée consiste à la remettre en état selon le texte de la carte.
@@ -199,6 +198,10 @@ Par défaut, une fonction réparée revient avec :
 - sa mémoire initiale toujours réservée ;
 - son cadre initial seulement ;
 - aucun cadre parasite, sauf mention contraire.
+
+**Reboot** : Option radicale permettant de réinitialiser entièrement sa zone de jeu.  
+  Toutes les fonctions en cours sont supprimées, la mémoire du joueur est rétablie à sa valeur initiale, la main est défaussée puis le joueur pioche 5 nouvelles cartes puis passe son tour.  
+  Cette action permet principalement de résoudre les situations de blocage dues à des fonctions qui vont forcément se casser ou à une mémoire saturée.
 
 ## 15. Cadres parasites
 Certains effets ajoutent des **cadres parasites**.
@@ -248,7 +251,6 @@ Si les deux joueurs passent successivement, la séquence de réaction s'achève 
 Quand un **Empiler** est annulé :
 - le cadre n'est pas ajouté ;
 - la **mémoire libre** correspondant à cet Empiler n'est **pas payée** ;
-- le **Cycle CPU** n'est perdu que si la carte ou l'effet l'indique explicitement.
 
 ## 19. Cas particulier : Débogueur pas à pas
 Si **Débogueur pas à pas** annule une casse puis dépile le dernier cadre d'une fonction, cette fonction est **défaussée sans marquer de points** et **sans appliquer d'effet de Terminaison**.
@@ -258,10 +260,12 @@ Si le cadre dépilé était le **cadre initial**, la mémoire initiale de cette 
 Ainsi, **Débogueur pas à pas** peut sauver une fonction d'une casse, mais ne transforme jamais cette casse en terminaison gratuite.
 
 ## 20. Déroulement d'un tour
-1. **Pioche** : pioche 1 carte, sauf pour le premier joueur à son premier tour.
-2. **Conception** : joue des fonctions, commandes et Hardware tant que tu peux payer leur coût en mémoire libre.
-3. **Ordonnancement CPU** : dépense jusqu'à 4 Cycles CPU, ou davantage si un effet t'en donne, pour Empiler et/ou Dépiler dans le respect des règles.
-4. **Fin de tour** : les effets temporaires cessent ; les cycles non utilisés sont perdus ; la mémoire libre temporaire non dépensée disparaît.
+
+1. **Reset** : Débloque la mémoire des cartes interruption utilisées.
+2. **Cycle** : Empile ou dépile toutes les fonctions actives (non cassé) du joueur actif.
+3. **Pioche** : Pioche 1 carte, sauf pour le premier joueur à son premier tour.
+4. **Conception** : Joue des fonctions, commandes et Hardware tant que tu peux payer leur coût en mémoire libre.
+5. **Fin de tour** : Les effets temporaires cessent ;  la mémoire libre temporaire non dépensée disparaît.
 
 ## 21. Texte harmonisé : Injection de Boucle
 **Injection de Boucle** a le texte officiel suivant :
