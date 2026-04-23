@@ -3,7 +3,7 @@
 <head>
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
-  <title>Neon Stack — Règles V5.2 harmonisées</title>
+  <title>Neon Stack — Règles V5.3 harmonisées</title>
   <style>
     :root{--bg:#0a0f17;--bg2:#121b28;--panel:rgba(16,24,36,.82);--panel2:rgba(20,30,46,.9);--text:#edf2ff;--muted:#b8c4dd;--cyan:#53d0ff;--orange:#ffb45f;--rose:#ff8d8d;--line:rgba(255,255,255,.12);--shadow:0 18px 50px rgba(0,0,0,.35);--radius:22px}
     *{box-sizing:border-box}html{scroll-behavior:smooth}body{margin:0;font-family:Inter,system-ui,-apple-system,Segoe UI,Roboto,Arial,sans-serif;color:var(--text);background:radial-gradient(circle at top, rgba(83,208,255,.12), transparent 34%),radial-gradient(circle at right, rgba(255,180,95,.10), transparent 28%),linear-gradient(180deg, var(--bg), #0e1521 35%, var(--bg2));line-height:1.6}
@@ -23,8 +23,8 @@
 <body>
   <div class="wrap">
     <section class="hero">
-      <h1>Neon Stack — Règles V5.2 harmonisées</h1>
-      <p class="lede">Cette version recentre le jeu sur la mémoire, les piles d’appels, les fonctions cassées, les cadres parasites et la phase de mise à jour automatique des fonctions. Les Cycles CPU disparaissent au profit d’un rythme d’exécution autonome.</p>
+      <h1>Neon Stack — Règles V5.3 harmonisées</h1>
+      <p class="lede">Cette version recentre le jeu sur la mémoire, les piles d’appels, les fonctions cassées, les cadres parasites et la phase de mise à jour automatique des fonctions. La V5.3 ajoute les clarifications de jeu issues des tests : ordre de mise à jour choisi par le joueur actif, Commandes et Interrupts libérés après résolution, parasites avant [0] clarifiés, et rééquilibrage d’Overclocking et Bombe à Retours.</p>
       <div class="chips">
         <span class="chip">21 points pour gagner</span>
         <span class="chip">4 fonctions terminées minimum</span>
@@ -44,6 +44,7 @@
           <li><a href="#mise-en-place">Mise en place</a></li>
           <li><a href="#memoire">Mémoire</a></li>
           <li><a href="#types">Types de cartes</a></li>
+          <li><a href="#paiement">Paiement et libération</a></li>
           <li><a href="#limites">Fonctions actives et Hardware</a></li>
           <li><a href="#cout">Coût mémoire des fonctions</a></li>
           <li><a href="#maj">Phase de mise à jour</a></li>
@@ -54,6 +55,7 @@
           <li><a href="#reboot">Reboot</a></li>
           <li><a href="#parasites">Cadres parasites et overflow</a></li>
           <li><a href="#interrupts">Interrupts</a></li>
+          <li><a href="#cartes-v53">Cartes V5.3</a></li>
           <li><a href="#tour">Déroulement d’un tour</a></li>
         </ol>
       </aside>
@@ -109,6 +111,20 @@
           </ul>
         </section>
 
+
+
+        <section class="rule" id="paiement">
+          <h2>5 bis. Paiement et libération de la mémoire</h2>
+          <p>Quand une carte est jouée, son coût est payé immédiatement en mémoire libre.</p>
+          <ul>
+            <li>Une <strong>Commande</strong> libère sa mémoire dès que son effet est entièrement résolu.</li>
+            <li>Un <strong>Interrupt</strong> libère sa mémoire dès que son effet est entièrement résolu.</li>
+            <li>Un <strong>Hardware</strong> conserve sa mémoire occupée tant qu’il reste en jeu.</li>
+            <li>Une <strong>Fonction</strong> conserve sa mémoire initiale réservée tant qu’elle est active, cassée, réparée ou en cours d’exécution.</li>
+          </ul>
+          <div class="note"><strong>Mémoire libre :</strong> elle ne peut jamais descendre sous 0. Si un effet fait perdre plus de mémoire libre que le joueur n’en possède, elle devient simplement 0.</div>
+        </section>
+
         <section class="rule" id="limites">
           <h2>6. Fonctions actives et Hardware</h2>
           <p>Un joueur peut contrôler au maximum <strong>3 fonctions actives</strong> et <strong>2 Hardware actifs</strong>.</p>
@@ -124,7 +140,7 @@
 
         <section class="rule" id="maj">
           <h2>8. Phase de mise à jour des fonctions</h2>
-          <p>Au début du tour d’un joueur, toutes ses <strong>fonctions actives non cassées</strong> passent par une <strong>phase de mise à jour</strong>, une par une.</p>
+          <p>Au début du tour d’un joueur, toutes ses <strong>fonctions actives non cassées</strong> passent par une <strong>phase de mise à jour</strong>, une par une. Le <strong>joueur actif choisit l’ordre</strong> dans lequel elles sont mises à jour.</p>
           <ul>
             <li>Si une fonction n’a pas encore atteint <code>[0]</code>, elle <strong>empile automatiquement</strong> un nouveau cadre.</li>
             <li>Si une fonction a déjà atteint <code>[0]</code>, elle <strong>dépile automatiquement</strong> son cadre du sommet.</li>
@@ -197,20 +213,38 @@
         <section class="rule" id="parasites">
           <h2>14. Cadres parasites et overflow</h2>
           <p>Un cadre parasite compte pour la taille d’une pile, doit être dépilé normalement, mais n’applique aucun cas de base, aucune remontée, aucune terminaison et ne libère pas de mémoire.</p>
+          <p><strong>Parasite avant [0] :</strong> un cadre parasite ajouté avant que la fonction atteigne <code>[0]</code> ne bloque pas la descente. La fonction continue d’empiler les cadres récursifs attendus jusqu’à <code>[0]</code>. Les parasites seront dépilés pendant la remontée lorsqu’ils arriveront au sommet.</p>
           <p>Une pile ne peut contenir que <strong>7 cadres</strong>. Si un effet ou une mise à jour devrait ajouter un <strong>8e cadre</strong>, il y a overflow : la fonction concernée casse immédiatement, les ajouts restants ne sont pas appliqués et la pile n’est plus résolue normalement.</p>
         </section>
 
         <section class="rule" id="interrupts">
-          <h2>15. Interrupts</h2>
-          <p>Les Interrupts peuvent être joués pendant n’importe quel tour dès que leur condition de déclenchement est remplie.</p>
-          <p>Un Interrupt est payé en mémoire libre au moment où il est joué. Une fois l’Interrupt entièrement résolu, la mémoire utilisée pour le payer est <strong>immédiatement libérée</strong>.</p>
+          <h2>15. Commandes et Interrupts</h2>
+          <p>Les Commandes sont jouées pendant ton tour. Les Interrupts peuvent être joués pendant n’importe quel tour dès que leur condition de déclenchement est remplie.</p>
+          <p>Une Commande ou un Interrupt est payé en mémoire libre au moment où il est joué. Une fois son effet entièrement résolu, la mémoire utilisée pour le payer est <strong>immédiatement libérée</strong>.</p>
           <p>Quand un événement déclencheur se produit, le joueur non actif a la première possibilité de répondre, puis les joueurs alternent un Interrupt à la fois. Les Interrupts se résolvent ensuite dans l’ordre inverse de leur pose.</p>
         </section>
 
+
+
+        <section class="rule" id="cartes-v53">
+          <h2>16. Cartes rééquilibrées en V5.3</h2>
+          <h3>Overclocking</h3>
+          <p><strong>Hardware — coût 2.</strong> Au début de chacun de tes tours, tu peux choisir une de tes fonctions. Elle effectue immédiatement une mise à jour supplémentaire. Si elle ne termine pas ce tour-ci, perds 1 mémoire libre à la fin du tour.</p>
+          <p>Cette mise à jour supplémentaire a lieu au début de la phase de mise à jour, avant les mises à jour normales.</p>
+          <h3>Bombe à Retours</h3>
+          <p><strong>Fonction — coût 4 — valeur 3 — Empiler 4.</strong></p>
+          <ul>
+            <li><strong>Cas de base :</strong> pioche 1 carte.</li>
+            <li><strong>Remontée :</strong> au prochain tour adverse, la première fonction adverse mise à jour en phase de descente ignore sa mise à jour.</li>
+            <li><strong>Terminaison :</strong> l’adversaire perd 2 mémoire libre au début de son prochain tour.</li>
+          </ul>
+          <div class="warning">Si plusieurs effets de Bombe à Retours devraient s’appliquer au même tour adverse, un seul de ces effets s’applique.</div>
+        </section>
+
         <section class="rule" id="tour">
-          <h2>16. Déroulement d’un tour</h2>
+          <h2>17. Déroulement d’un tour</h2>
           <ol>
-            <li><strong>Phase de mise à jour</strong> : toutes les fonctions actives non cassées du joueur actif sont mises à jour automatiquement.</li>
+            <li><strong>Phase de mise à jour</strong> : le joueur actif choisit l’ordre de mise à jour de ses fonctions actives non cassées ; chacune est ensuite mise à jour automatiquement.</li>
             <li><strong>Pioche</strong> : le joueur pioche 1 carte dans la pile de son choix. Le premier joueur ne pioche pas à son premier tour.</li>
             <li><strong>Conception</strong> : le joueur peut jouer des Fonctions, des Commandes et des Hardware tant qu’il peut payer leur coût, ou choisir d’effectuer un reboot à la place.</li>
             <li><strong>Fin de tour</strong> : les effets temporaires cessent ; la mémoire libre temporaire non dépensée disparaît.</li>
@@ -220,7 +254,7 @@
           </div>
         </section>
 
-        <p class="footer">Version V5.2 harmonisée. Les textes de cartes liés aux anciens Cycles CPU doivent être réécrits pour être pleinement compatibles avec cette version.</p>
+        <p class="footer">Version V5.3 harmonisée. Cette version intègre les clarifications de coût mémoire, de parasites et les deux cartes rééquilibrées Overclocking et Bombe à Retours.</p>
       </main>
     </div>
   </div>
